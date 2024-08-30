@@ -83,15 +83,13 @@ class Woo_Variation_Swatches_Pro_Widget_Layered_Nav extends WC_Widget_Layered_Na
 			if ( woo_variation_swatches()->get_frontend()->is_color_attribute( $attribute ) ) {
 
 				echo '<li class="wvs-widget-layered-nav-list__item wvs-widget-layered-nav-list__item-color woocommerce-widget-layered-nav-list__item wc-layered-nav-term ' . ( $option_is_set ? 'woocommerce-widget-layered-nav-list__item--chosen chosen selected' : '' ) . '">';
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.EscapeOutput.OutputNotEscaped
 
 				$is_dual_color = woo_variation_swatches()->get_frontend()->get_product_attribute_is_dual_color( $term );
 				$wrapper_class = 'wvs-widget-item-wrapper';
 				$item_class    = sprintf( 'style-%s', woo_variation_swatches()->get_option( 'shape_style', 'squared' ) );
 
-
 				if ( $is_dual_color ) {
-					$wrapper_class   .= ' wvs-widget-dual-color-item-wrapper';
+					$wrapper_class  .= ' wvs-widget-dual-color-item-wrapper';
 					$primary_color   = sanitize_hex_color( woo_variation_swatches()->get_frontend()->get_product_attribute_primary_color( $term ) );
 					$secondary_color = sanitize_hex_color( woo_variation_swatches()->get_frontend()->get_product_attribute_secondary_color( $term ) );
 					$angle           = woo_variation_swatches()->get_frontend()->get_dual_color_gradient_angle();
@@ -114,13 +112,12 @@ class Woo_Variation_Swatches_Pro_Widget_Layered_Nav extends WC_Widget_Layered_Na
 				}
 			} else {
 				echo '<li class="wvs-widget-layered-nav-list__item woocommerce-widget-layered-nav-list__item wc-layered-nav-term ' . ( $option_is_set ? 'woocommerce-widget-layered-nav-list__item--chosen chosen' : '' ) . '">';
-				// phpcs:ignore WordPress.Security.NonceVerification.Recommended, WordPress.Security.EscapeOutput.OutputNotEscaped
-
 			}
 
 			$term_html .= ' ' . apply_filters( 'woocommerce_layered_nav_count', '<span class="count">(' . absint( $count ) . ')</span>', $count, $term );
 
-			echo apply_filters( 'woocommerce_layered_nav_term_html', $term_html, $term, $link, $count );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo wp_kses_post(  apply_filters( 'woocommerce_layered_nav_term_html', $term_html, $term, $link, $count ) );
 			echo '</li>';
 		}
 

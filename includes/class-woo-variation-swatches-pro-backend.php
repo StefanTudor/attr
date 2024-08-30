@@ -4,20 +4,16 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Woo_Variation_Swatches_Pro_Backend' ) ) {
 	class Woo_Variation_Swatches_Pro_Backend extends Woo_Variation_Swatches_Backend {
 
-		protected static $_instance = null;
+		protected static $instance = null;
 		protected $group_instance;
 		protected $edit_panel_instance;
 
-		protected function __construct() {
-			parent::__construct();
-		}
-
 		public static function instance() {
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
 
 		protected function hooks() {
@@ -222,7 +218,7 @@ if ( ! class_exists( 'Woo_Variation_Swatches_Pro_Backend' ) ) {
 
 			foreach ( $all_types as $type ) {
 				foreach ( $common_fields as $index => $field ) {
-					array_push( $fields[ $type ], $field );
+					$fields[ $type ][] = $field;
 				}
 			}
 

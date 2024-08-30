@@ -5,22 +5,19 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Woo_Variation_Swatches_Pro_Group' ) ) {
 
 	class Woo_Variation_Swatches_Pro_Group {
-		protected static $_instance = null;
+		protected static $instance = null;
 
 		protected function __construct() {
 
 		}
 
 		public static function instance() {
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
-
-
-		// start
 
 		public function get_id() {
 			return 'woo_variation_swatches_groups';

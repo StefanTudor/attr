@@ -3,4 +3,15 @@
 		<custom-field action="copy">_wvs_product_attributes</custom-field>
 		<custom-field action="copy">_woo_variation_swatches_product_settings</custom-field>
 	</custom-fields>
+	<custom-term-fields>
+		<custom-term-field action="copy">product_attribute_color</custom-term-field>
+		<custom-term-field action="copy">product_attribute_image</custom-term-field>
+		<custom-term-field action="copy">is_dual_color</custom-term-field>
+		<custom-term-field action="copy">secondary_color</custom-term-field>
+		<custom-term-field action="copy">image_size</custom-term-field>
+		<custom-term-field action="copy">show_tooltip</custom-term-field>
+		<custom-term-field action="copy">tooltip_text</custom-term-field>
+		<custom-term-field action="copy">tooltip_image_id</custom-term-field>
+		<custom-term-field action="copy">group_name</custom-term-field>
+	</custom-term-fields>
 </wpml-config>

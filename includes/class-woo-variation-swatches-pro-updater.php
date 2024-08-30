@@ -1,21 +1,21 @@
 <?php
 
-defined( 'ABSPATH' ) or die( 'Keep Silent' );
+defined( 'ABSPATH' ) || die( 'Keep Silent' );
 
-if ( ! class_exists( 'Woo_Variation_Swatches_Pro_Updater', false ) ):
+if ( ! class_exists( 'Woo_Variation_Swatches_Pro_Updater', false ) ) :
 
 	require_once dirname( __FILE__ ) . '/getwooplugins/class-getwooplugins-plugin-updater.php';
 
 	class Woo_Variation_Swatches_Pro_Updater extends GetWooPlugins_Plugin_Updater {
 
-		protected static $_instance = null;
+		protected static $instance = null;
 
 		public static function instance() {
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
 
 		public function __construct() {

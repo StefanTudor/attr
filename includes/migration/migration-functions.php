@@ -5,9 +5,7 @@ function woo_variation_swatches_pro_migrate_200_product_attributes() {
 
 	global $wpdb;
 
-	$prepare = $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = %s AND meta_value != '0'", 'tooltip_image' ); // phpcs:ignore
-
-	$term_ids = $wpdb->get_col( $prepare );
+	$term_ids = $wpdb->get_col( $wpdb->prepare( "SELECT term_id FROM $wpdb->termmeta WHERE meta_key = %s AND meta_value != '0'", 'tooltip_image' ) );
 
 	foreach ( $term_ids as $term_id ) {
 		$meta_value = get_term_meta( $term_id, 'tooltip_image', true );
@@ -37,7 +35,7 @@ function woo_variation_swatches_pro_migrate_200_old_to_new( $contents = array() 
 			$new_key = $old_key;
 		}
 
-		if ( $new_key === 'type' && $content === 'custom' ) {
+		if ( 'type' === $new_key && 'custom' === $content  ) {
 			$content = 'mixed';
 		}
 
@@ -51,13 +49,11 @@ function woo_variation_swatches_pro_migrate_200_old_to_new( $contents = array() 
 
 }
 
-function woo_variation_swatches_pro_migrate_200_variable_products_swatches_settings() {
+function woo_variation_swatches_pro_migrate_200_products_swatches_settings() {
 
 	global $wpdb;
 
-	$prepare = $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value != ''", '_wvs_product_attributes' ); // phpcs:ignore
-
-	$post_ids = $wpdb->get_col( $prepare );
+	$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value != ''", '_wvs_product_attributes' ) );
 
 	foreach ( $post_ids as $post_id ) {
 
@@ -170,3 +166,33 @@ function woo_variation_swatches_pro_migrate_202_group_slugs() {
 	return true;
 
 }
+
+function woo_variation_swatches_pro_migrate_210_products_swatches_settings() {
+
+	global $wpdb;
+
+	$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = %s AND meta_value != ''", '_woo_variation_swatches_product_settings' ) );
+
+	foreach ( $post_ids as $post_id ) {
+
+		$data     = array();
+		$old_data = (array) get_post_meta( $post_id, '_woo_variation_swatches_product_settings', true );
+
+		foreach ($old_data as $settings_key => $settings_value) {
+			// Migrating Custom Attribute values.
+			if ( is_array( $settings_value) && is_array( $settings_value['terms']) && false === strpos( $settings_key, 'pa_' )  ) {
+				$index = 0;
+				foreach ( $settings_value['terms'] as $term_key => $term_value ) {
+					$settings_value['terms'][$index] = $term_value;
+					++$index;
+				}
+			}
+			$data[$settings_key] = $settings_value;
+		}
+
+		 update_post_meta( $post_id, '_woo_variation_swatches_product_settings', $data );
+	}
+
+	return true;
+}
+

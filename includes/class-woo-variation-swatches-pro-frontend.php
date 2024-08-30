@@ -4,18 +4,14 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'Woo_Variation_Swatches_Pro_Frontend' ) ) {
 	class Woo_Variation_Swatches_Pro_Frontend extends Woo_Variation_Swatches_Frontend {
 
-		protected static $_instance = null;
-
-		protected function __construct() {
-			parent::__construct();
-		}
+		protected static $instance = null;
 
 		public static function instance() {
-			if ( is_null( self::$_instance ) ) {
-				self::$_instance = new self();
+			if ( is_null( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
 
 		protected function includes() {

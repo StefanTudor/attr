@@ -2,7 +2,11 @@
 
 defined( 'ABSPATH' ) || exit;
 
-$pending_actions_url = admin_url( 'admin.php?page=wc-status&tab=action-scheduler&s=woo_variation_swatches_pro_run_migration&status=pending' );
+/**
+ * Migration Notice Template.
+ *
+ * @var $pending_actions_url
+ */
 
 $cron_disabled = defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON;
 $cron_cta      = $cron_disabled ? esc_html__( 'You should manually run queued updates here.', 'woo-variation-swatches-pro' ) : esc_html__( 'View progress &rarr;', 'woo-variation-swatches-pro' );
